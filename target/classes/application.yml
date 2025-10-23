@@ -1,0 +1,13 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: course-management
+
+logging:
+  level:
+    com.zjsu: DEBUG
+    org.springframework.web: DEBUG
+
+
