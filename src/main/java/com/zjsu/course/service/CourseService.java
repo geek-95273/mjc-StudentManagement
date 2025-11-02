@@ -3,7 +3,7 @@ package com.zjsu.course.service;
 import com.zjsu.course.exception.BusinessException;
 import com.zjsu.course.exception.ResourceNotFoundException;
 import com.zjsu.course.model.Course;
-import com.zjsu.course.repository.CourseRepository;
+import com.zjsu.course.repository.CourseJpaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +17,7 @@ import java.util.UUID;
 public class CourseService {
     
     @Autowired
-    private CourseRepository courseRepository;
+    private CourseJpaRepository courseRepository;
 
     public List<Course> getAllCourses() {
         return courseRepository.findAll();

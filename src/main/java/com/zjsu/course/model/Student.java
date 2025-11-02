@@ -3,39 +3,57 @@ package com.zjsu.course.model;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
-
 
 /**
  * 学生实体类
  */
+@Entity
+@Table(name = "students", uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"student_id"}),
+        @UniqueConstraint(columnNames = {"email"})
+})
 public class Student {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createdAt;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime updatedAt;
-    @JsonProperty("id")
+
+    @Id
+    @Column(name = "id", length = 64)
     private String id;
     
     @JsonProperty("studentId")
+    @Column(name = "student_id", nullable = false, unique = true)
     private String studentId;
     
     @JsonProperty("name")
+    @Column(name = "name")
     private String name;
     
     @JsonProperty("major")
+    @Column(name = "major")
     private String major;
     
     @JsonProperty("grade")
+    @Column(name = "grade")
     private Integer grade;
     
     @JsonProperty("email")
+    @Column(name = "email", nullable = false, unique = true)
     private String email;
 
 
 
     public Student() {}
+
+    @PrePersist
+    public void prePersist() {
+        if (this.id == null) this.id = java.util.UUID.randomUUID().toString();
+        if (this.createdAt == null) this.createdAt = LocalDateTime.now();
+    }
 
     public Student(String id, String studentId, String name, String major, 
                    Integer grade, String email, LocalDateTime createdAt) {

@@ -2,9 +2,12 @@ package com.zjsu.course.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import javax.persistence.Embeddable;
+
 /**
- * 教师实体类
+ * 教师信息（嵌入对象）
  */
+@Embeddable
 public class Instructor {
     @JsonProperty("id")
     private String id;

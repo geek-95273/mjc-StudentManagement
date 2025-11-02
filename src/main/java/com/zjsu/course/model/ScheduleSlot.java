@@ -2,9 +2,12 @@ package com.zjsu.course.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import javax.persistence.Embeddable;
+
 /**
- * 课程时间安排实体类
+ * 课程时间安排（嵌入对象）
  */
+@Embeddable
 public class ScheduleSlot {
     @JsonProperty("dayOfWeek")
     private String dayOfWeek;

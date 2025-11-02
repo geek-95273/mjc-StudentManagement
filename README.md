@@ -160,6 +160,55 @@ src/
    - 应用将在 `http://localhost:8080` 启动
    - API基础路径：`http://localhost:8080/api`
 
+## 数据库（MySQL）运行说明
+
+本项目当前仅支持通过 MySQL 持久化运行（production 模式）。文档聚焦于生产环境（MySQL）的部署与验证步骤。
+
+1) 准备 MySQL 数据库
+
+ - 创建数据库（示例）：
+   ```sql
+   CREATE DATABASE course_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+   ```
+
+2) 配置连接信息
+
+ - 打开 `src/main/resources/application-prod.yml`，将 `spring.datasource.url`、`username`、`password` 修改为你的 MySQL 实例信息。
+
+3) 导入表结构与测试数据（recommended）
+
+ - 建议手动导入 SQL 脚本以确保表结构与实体一致：
+   ```powershell
+   mysql -u <user> -p course_db < src/main/resources/db/schema.sql
+   mysql -u <user> -p course_db < src/main/resources/db/data.sql   # 可选测试数据
+   ```
+
+ - 生产环境中 `application-prod.yml` 使用 `ddl-auto: validate`，因此必须先创建表或使用迁移工具（Flyway/Liquibase）。
+
+4) 启动应用（生产模式）
+
+ - 使用 Maven 运行：
+   ```powershell
+   mvn spring-boot:run -Dspring-boot.run.profiles=prod
+   ```
+
+ - 或先打包再运行：
+   ```powershell
+   mvn -DskipTests package
+   java -jar target\course-management-1.0.0.jar --spring.profiles.active=prod
+   ```
+
+5) 验证数据库连通性
+
+ - 健康检查：
+   GET http://localhost:8080/health/db  应返回 "OK"
+
+6) 运行 API 测试
+
+ - 按 `test-api.http` 中的顺序或使用 Postman/Apifox 测试 CRUD 与选课流程。
+
+注意：如果你需要在本地快速迭代并且无法搭建 MySQL，可以通过临时在 `application-prod.yml` 中将 `spring.jpa.hibernate.ddl-auto` 改为 `update` 来让应用自动创建表（仅用于开发/迁移阶段，不建议长期在生产中使用）。
+
 ### 使用IDE运行
 1. 导入Maven项目到IDE
 2. 找到 `CourseApplication.java` 启动类

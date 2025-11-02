@@ -3,8 +3,8 @@ package com.zjsu.course.service;
 import com.zjsu.course.exception.BusinessException;
 import com.zjsu.course.exception.ResourceNotFoundException;
 import com.zjsu.course.model.Student;
-import com.zjsu.course.repository.EnrollmentRepository;
-import com.zjsu.course.repository.StudentRepository;
+import com.zjsu.course.repository.EnrollmentJpaRepository;
+import com.zjsu.course.repository.StudentJpaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,10 +19,10 @@ import java.util.UUID;
 public class StudentService {
     
     @Autowired
-    private StudentRepository studentRepository;
+    private StudentJpaRepository studentRepository;
     
     @Autowired
-    private EnrollmentRepository enrollmentRepository;
+    private EnrollmentJpaRepository enrollmentRepository;
 
     public List<Student> getAllStudents() {
         return studentRepository.findAll();
