@@ -69,12 +69,11 @@
             <scope>runtime</scope>
         </dependency>
 
-        <!-- H2 for local development (dev profile uses H2) -->
+        <!-- H2 for local development (dev profile uses H2). Leave without scope so IDE/compiler can see WebServlet. -->
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <version>2.1.214</version>
-            <scope>runtime</scope>
         </dependency>
     </dependencies>
 
